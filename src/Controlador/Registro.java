@@ -46,4 +46,18 @@ public class Registro {
             return false;
         }
     }
+    
+    public static boolean selAdqui(Adquisicion adq) {
+        try{
+            Connection conexion = Conexion.getConnect();
+            PreparedStatement selAdq = conexion.prepareStatement(SEL_ADQUISICION);
+            selAdq.execute();
+            selAdq.close();
+            conexion.close();
+            return true;
+        } catch (Exception e) {
+            System.out.println("Error SQL al buscar el registro " + e.getMessage());
+            return false;
+        }
+    }
 }
