@@ -7,19 +7,53 @@ package Vista;
 
 import Controlador.Registro;
 import Modelo.Adquisicion;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author jperez
  */
 public class EditAdquisicion extends javax.swing.JFrame {
-
+    
+    DefaultTableModel modelo = new DefaultTableModel();
+    
+    ResultSet rs;
+    
     /**
      * Creates new form Adquisicion
      */
-    public EditAdquisicion() {
+    public EditAdquisicion() throws SQLException {
+        this.rs = Registro.setAdqui();
+        int cantidadColumnas = Registro.cuentaColumnas(rs);
         initComponents();
+        
+        try {
+        jtAdquisicion.setModel(modelo);
+        
+        modelo.addColumn("ID");
+        modelo.addColumn("Tipo Adquisición");
+        
+        int[] anchos = {50, 200};
+        for (int i = 0; i < jtAdquisicion.getColumnCount(); i++) {
+                jtAdquisicion.getColumnModel().getColumn(i).setPreferredWidth(anchos[i]);
+            }
+        
+        while (rs.next()) {
+                Object[] filas = new Object[cantidadColumnas];
+                for (int i = 0; i < cantidadColumnas; i++) {
+                    filas[i] = rs.getObject(i + 1);
+                }
+                modelo.addRow(filas);
+            }
+        } catch (SQLException e) {
+            System.err.println(e.toString());
+        }
+        
     }
 
     /**
@@ -33,7 +67,7 @@ public class EditAdquisicion extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jtAdquisicion = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         btnVolver1 = new javax.swing.JButton();
         btnLimpiar1 = new javax.swing.JButton();
@@ -46,7 +80,7 @@ public class EditAdquisicion extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Administrar tipo de Adquisición");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jtAdquisicion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -72,7 +106,7 @@ public class EditAdquisicion extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jtAdquisicion);
 
         btnVolver1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/img/Volver.png"))); // NOI18N
         btnVolver1.setText("Volver");
@@ -232,7 +266,11 @@ public class EditAdquisicion extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new EditAdquisicion().setVisible(true);
+                try {
+                    new EditAdquisicion().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(EditAdquisicion.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -245,7 +283,7 @@ public class EditAdquisicion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jtAdquisicion;
     private javax.swing.JTextField txtTipoAdq;
     // End of variables declaration//GEN-END:variables
 }
