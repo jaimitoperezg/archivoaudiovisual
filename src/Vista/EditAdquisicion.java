@@ -28,7 +28,7 @@ public class EditAdquisicion extends javax.swing.JFrame {
      * Creates new form Adquisicion
      */
     public EditAdquisicion() throws SQLException {
-        this.rs = Registro.setAdqui(1);
+        this.rs = Registro.setEdit(1);
         int cantidadColumnas = Registro.cuentaColumnas(rs);
         initComponents();
         

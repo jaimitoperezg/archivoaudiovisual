@@ -110,7 +110,7 @@ public class Registro {
 //    }
     
     //Obtiene los datos para el resultset que se muestra en el Jtable de la vista de edición de elementos
-    public static ResultSet setAdqui(int setSql) throws SQLException {
+    public static ResultSet setEdit(int setSql) throws SQLException {
         ResultSet result = null;
         String querySql = null;
         switch (setSql) {
