@@ -28,7 +28,7 @@ public class EditAdquisicion extends javax.swing.JFrame {
      * Creates new form Adquisicion
      */
     public EditAdquisicion() throws SQLException {
-        this.rs = Registro.setAdqui();
+        this.rs = Registro.setAdqui(1);
         int cantidadColumnas = Registro.cuentaColumnas(rs);
         initComponents();
         
@@ -52,8 +52,7 @@ public class EditAdquisicion extends javax.swing.JFrame {
             }
         } catch (SQLException e) {
             System.err.println(e.toString());
-        }
-        
+        }   
     }
 
     /**
@@ -74,6 +73,7 @@ public class EditAdquisicion extends javax.swing.JFrame {
         btnAgregar1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtTipoAdq = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -158,6 +158,14 @@ public class EditAdquisicion extends javax.swing.JFrame {
 
         jLabel2.setText("Tipo de Adquisición:");
 
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/img/buscar.png"))); // NOI18N
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -178,7 +186,9 @@ public class EditAdquisicion extends javax.swing.JFrame {
                                 .addContainerGap()
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtTipoAdq, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtTipoAdq, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(70, 70, 70)
+                                .addComponent(btnBuscar)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -187,11 +197,12 @@ public class EditAdquisicion extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(15, 15, 15)
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtTipoAdq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
+                    .addComponent(txtTipoAdq, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 183, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -235,6 +246,20 @@ public class EditAdquisicion extends javax.swing.JFrame {
         } 
     }//GEN-LAST:event_btnAgregar1ActionPerformed
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        boolean trueBuscar = true;
+        String buscar = txtTipoAdq.getText();
+        
+        if(this.txtTipoAdq.getText().trim().equals("")) {
+            trueBuscar = false;
+            JOptionPane.showMessageDialog(this, "Debes ingresar al menos una letra en el campo de texto para buscar por tipo de Adquisición");
+        }
+        
+        if(trueBuscar == true) {
+            
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -277,6 +302,7 @@ public class EditAdquisicion extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar1;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnLimpiar1;
     private javax.swing.JButton btnVolver1;
     private javax.swing.JLabel jLabel1;
