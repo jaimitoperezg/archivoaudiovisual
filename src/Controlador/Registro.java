@@ -35,6 +35,7 @@ public class Registro {
     private static final String SEL_PUBLICO = "SELECT * FROM publico";
     private static final String SEL_TEMA = "SELECT * FROM tema";
     private static final String SEL_ESTADO = "SELECT * FROM estado_revision";
+    private static final String EDIT_ADQUISICION = "SELECT * FROM adquisicion WHERE id_adquisicion = ?";
     
     
     
@@ -55,44 +56,51 @@ public class Registro {
     }
     
     
-    public static ResultSet findAdqui(int setSql, Adquisicion adq) throws SQLException {
-        ResultSet result = null;
-        String querySql = null;
-        switch (setSql) {
-            case 1: querySql = SEL_ADQUISICION;
-                    break;
-            case 2: querySql = SEL_PAIS;
-                    break;
-            case 3: querySql = SEL_PRODUCTORA;
-                    break;
-            case 4: querySql = SEL_FORMATO;
-                    break;
-            case 5: querySql = SEL_GENERO;
-                    break;
-            case 6: querySql = SEL_TECNICA;
-                    break;
-            case 7: querySql = SEL_PUBLICO;
-                    break;
-            case 8: querySql = SEL_TEMA;
-                    break;
-            case 9: querySql = SEL_ESTADO;
-                    break;
-        }
-        Connection conexion = Conexion.getConnect();
-        String sql_stmt = querySql;
-        PreparedStatement buscaAdq = conexion.prepareStatement(querySql);
-            buscaAdq.setString(1, adq.getTipo_adquisicion());
-            buscaAdq.execute();
+    public static Adquisicion editAdqui(int Codigo) {
+        Adquisicion adq = null;
+        try {
+            Connection conexion = Conexion.getConnect();
+            PreparedStatement buscaAdq = conexion.prepareStatement(EDIT_ADQUISICION);
+            buscaAdq.setInt(1, Codigo);
+            ResultSet rs = buscaAdq.executeQuery();
+            if(rs.next()) {
+                int codigo = rs.getInt("id_adquisicion");
+                String tipoAdq = rs.getString("tipo_adquisicion");
+                
+                adq = new Adquisicion(codigo, tipoAdq);
+                return adq;
+            }
             buscaAdq.close();
             conexion.close();
-        Statement statement = conexion.createStatement();
-        try{
-            result = statement.executeQuery(sql_stmt);
-        } catch (SQLException e) {
-            System.out.println("Error SQL al buscar el registro " + e.getMessage());
+        } 
+        catch(SQLException e) {
+            System.out.println("Error SQL al buscar el tipo de adquisición código " + Codigo + e.getMessage());
+            return adq;
         }
-        return result;
+        
+        return null;
     }
+
+//        Código antiguo
+
+
+//        public static  findAdqui(Adquisicion adq) throws SQLException {
+//        ResultSet result = null;
+//        Connection conexion = Conexion.getConnect();
+//        String sql_stmt = FIND_ADQUISICION;
+//        PreparedStatement buscaAdq = conexion.prepareStatement(sql_stmt);
+//            buscaAdq.setString(1, adq.getTipo_adquisicion());
+//            buscaAdq.execute();
+//            buscaAdq.close();
+//            conexion.close();
+//        Statement statement = conexion.createStatement();
+//        try{
+//            result = statement.executeQuery(sql_stmt);
+//        } catch (SQLException e) {
+//            System.out.println("Error SQL al buscar el registro " + e.getMessage());
+//        }
+//        return result;
+//    }
     
 //    public static boolean findAdqui(Adquisicion adq) {
 //        try{

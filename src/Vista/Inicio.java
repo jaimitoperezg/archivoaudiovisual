@@ -5,6 +5,10 @@
  */
 package Vista;
 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author jperez
@@ -500,9 +504,13 @@ public class Inicio extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarRevisorActionPerformed
 
     private void btnEditarAdquisicionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarAdquisicionActionPerformed
-        EditAdquisicion adq = new EditAdquisicion();
-        adq.setVisible(true);
-        this.setVisible(false);
+        try {
+            EditAdquisicion adq = new EditAdquisicion();
+            adq.setVisible(true);
+            this.setVisible(false);
+        } catch (SQLException ex) {
+            Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnEditarAdquisicionActionPerformed
 
     /**

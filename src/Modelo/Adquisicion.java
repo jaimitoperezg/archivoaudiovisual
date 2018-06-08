@@ -18,6 +18,11 @@ public class Adquisicion {
         this.tipo_adquisicion = "";
     }
     
+    public Adquisicion(int id) {
+        this.id = id;
+        //this.tipo_adquisicion = tipo_adquisicion;
+    }
+    
     public Adquisicion(String tipo_adquisicion) {
         //this.id = id;
         this.tipo_adquisicion = tipo_adquisicion;
