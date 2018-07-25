@@ -28,7 +28,7 @@ public class EditAdquisicion extends javax.swing.JFrame {
      * Creates new form Adquisicion
      */
     public EditAdquisicion() throws SQLException {
-        this.rs = Registro.setEdit(1);
+        this.rs = Registro.setTable(1);
         int cantidadColumnas = Registro.cuentaColumnas(rs);
         initComponents();
         
@@ -72,6 +72,7 @@ public class EditAdquisicion extends javax.swing.JFrame {
         btnLimpiar1 = new javax.swing.JButton();
         btnAgregar1 = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtTipoAdq = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
@@ -148,6 +149,14 @@ public class EditAdquisicion extends javax.swing.JFrame {
             }
         });
 
+        btnActualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Vista/img/upload.png"))); // NOI18N
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -159,6 +168,8 @@ public class EditAdquisicion extends javax.swing.JFrame {
                 .addComponent(btnAgregar1)
                 .addGap(18, 18, 18)
                 .addComponent(btnBuscar)
+                .addGap(18, 18, 18)
+                .addComponent(btnActualizar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnLimpiar1)
                 .addContainerGap())
@@ -171,7 +182,8 @@ public class EditAdquisicion extends javax.swing.JFrame {
                     .addComponent(btnVolver1)
                     .addComponent(btnAgregar1)
                     .addComponent(btnLimpiar1)
-                    .addComponent(btnBuscar))
+                    .addComponent(btnBuscar)
+                    .addComponent(btnActualizar))
                 .addGap(37, 37, 37))
         );
 
@@ -346,9 +358,26 @@ public class EditAdquisicion extends javax.swing.JFrame {
         int fila = jtAdquisicion.getSelectedRow();
         int codeId = (int) jtAdquisicion.getValueAt(fila, 0);    
         Registro eBuscar = new Registro(); 
-        Adquisicion finder = eBuscar.editAdqui(codeId);
+        Adquisicion finder = eBuscar.textAdqui(codeId);
         this.txtTipoAdq.setText(finder.getTipo_adquisicion());
     }//GEN-LAST:event_jtAdquisicionMouseClicked
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        boolean verifica = true;
+        
+        Adquisicion adq = new Adquisicion();
+        
+        adq.setTipo_adquisicion(this.txtTipoAdq.getText());
+        
+        if(Registro.actualizarPeli(peli))
+            {
+                javax.swing.JOptionPane.showMessageDialog(this, "Registro actualizado");
+            }
+            else
+            {
+                javax.swing.JOptionPane.showMessageDialog(this, "No se actualizó el registro");
+            }
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -391,6 +420,7 @@ public class EditAdquisicion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAgregar1;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnLimpiar1;

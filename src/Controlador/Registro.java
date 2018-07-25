@@ -36,6 +36,7 @@ public class Registro {
     private static final String SEL_TEMA = "SELECT * FROM tema";
     private static final String SEL_ESTADO = "SELECT * FROM estado_revision";
     private static final String EDIT_ADQUISICION = "SELECT * FROM adquisicion WHERE id_adquisicion = ?";
+    private static final String UPDATE_ADQ = "UPDATE adquisicion SET tipo_adquisicion=? WHERE id_adquisicion=?";
     
     
     
@@ -56,7 +57,7 @@ public class Registro {
     }
     
     
-    public static Adquisicion editAdqui(int Codigo) {
+    public static Adquisicion textAdqui(int Codigo) {
         Adquisicion adq = null;
         try {
             Connection conexion = Conexion.getConnect();
@@ -117,8 +118,27 @@ public class Registro {
 //        }
 //    }
     
+    //Edita la información del tipo de Adquisición en la base de datos
+    public static boolean actualizarAdq(Adquisicion adq)
+    {
+        try{
+            Connection conexion = Conexion.getConnect();
+            PreparedStatement updAdq = conexion.prepareStatement(UPDATE_ADQ);
+            updAdq.setString(1, adq.getTipo_adquisicion());
+            updAdq.execute();
+            updAdq.close();
+            conexion.close();
+            return true;
+        }
+        catch(Exception e)
+        {
+            System.out.println("Error SQL al actualizar el Tipo de Adquisición " + e.getMessage());
+            return false;
+        }
+    }
+    
     //Obtiene los datos para el resultset que se muestra en el Jtable de la vista de edición de elementos
-    public static ResultSet setEdit(int setSql) throws SQLException {
+    public static ResultSet setTable(int setSql) throws SQLException {
         ResultSet result = null;
         String querySql = null;
         switch (setSql) {
